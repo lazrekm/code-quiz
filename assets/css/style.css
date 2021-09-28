@@ -1,0 +1,99 @@
+body {
+    font-family: Arial;
+    font-size: 120%;
+  }
+  
+  a {
+    color: rgb(134, 98, 7);
+  }
+  
+  button {
+    display: inline-block;
+    margin: 9px;
+    font-size: 100%;
+    background-color: goldenrod;
+    border-radius: 2px;
+    padding: 14px 20px;
+    color: white;
+    transition: all 0.5s ease-in;
+  }
+
+  /* -----Go back button---- */
+  #back{
+    display: inline-block;
+    margin: 9px;
+    font-size: 100%;
+    background-color: goldenrod;
+    border-radius: 2px;
+    padding: 4px 10px;
+    color: white;
+    transition: all 0.5s ease-in;
+  }
+  
+  /* ----clear highscores button---- */
+  #clear{
+    display: inline-block;
+    margin: 9px;
+    font-size: 100%;
+    background-color: goldenrod;
+    border-radius: 2px;
+    padding: 4px 10px;
+    color: white;
+    transition: all 0.5s ease-in;
+  }
+  
+  button:hover {
+    background-color: #ade4a3;
+  }
+  
+  .choices button {
+    display: block;
+  }
+  
+  input[type="text"] {
+    font-size: 100%;
+  }
+  
+  ol {
+    max-height: 400px;
+  }
+  
+  li {
+    padding: 5px;
+    list-style: decimal inside none;
+  }
+  
+  .wrapper {
+    margin: 100px auto;
+    max-width: 700px;
+  }
+  
+  .hide {
+    display: none;
+  }
+  
+  .start {
+    text-align: center;
+  }
+  
+  .scores {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  
+  .feedback {
+    font-style: italic;
+    font-size: 150%;
+    margin-top: 20px;
+    padding-top: 20px;
+    color: rgb(75, 75, 75);
+  }
+  
+  .timer {
+    position: absolute;
+    color: rgb(129, 93, 2);
+    top: 10px;
+    right: 10px;
+  }
+  
