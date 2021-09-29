@@ -1,35 +1,72 @@
+// Define a set of questions
+var questions = [
+  {
+    title: "How many members does the rap band PNL compose of? ",
+    choices: ["Four", "Six", "Two", "Three"],
+    answer: "Two",
+  },
+  {
+    title: "What does PNL mean?",
+    choices: [
+      "Peace N'Lovés",
+      "Papa, Nabil, Légende",
+      "Peace and Love",
+      "None of the above",
+    ],
+    answer: "Peace N'Lovés",
+  },
+  {
+    title: "What is the family that unites them?",
+    choices: ["Cousins", "Father son", "Friends", "Brothers"],
+    answer: "Brothers",
+  },
+  {
+    title: "What is the name of their first album?",
+    choices: ["Que la mif", "Deux frères", "Dans la légende", "Le Monde Chico"],
+    answer: "Le Monde Chico",
+  },
+  {
+    title: "What certification did they obtain in August 2020?",
+    choices: ["Double platinum", "Platinum", "Gold", "Double diamond"],
+    answer: "Double diamond",
+  },
+];
+
+// define other variables
 var currentQuestionIndex = 0;
-var time = questions.length * 15;
+var time = questions.length * 10;
 var timerId;
 
-var questionsEl = document.querySelector("#questions");
-var timerEl = document.querySelector("#time");
-var choicesEl = document.querySelector("#choices");
-var submitBtn = document.querySelector("#submit");
-var startBtn = document.querySelector("#start");
-var initialsEl = document.querySelector("#initials");
-var feedbackEl = document.querySelector("#feedback");
+var questionsElement = document.querySelector("#questions");
+var timerElement = document.querySelector("#time");
+var choicesElement = document.querySelector("#choices");
+var feedbackElement = document.querySelector("#feedback");
+var submitButton = document.querySelector("#submit");
+var startButton = document.querySelector("#start");
+var initialsElement = document.querySelector("#initials");
 
+// timer starts
 function startQuiz() {
-  var startScreenEl = document.querySelector("#start-screen");
-  startScreenEl.setAttribute("class", "hide");
+  var startScreenElement = document.querySelector("#start-screen");
+  startScreenElement.setAttribute("class", "hide");
 
-  questionsEl.removeAttribute("class");
+  questionsElement.removeAttribute("class");
 
-  timerId = setInterval(clockTick, 1000);
+  timerId = setInterval(clockTicking, 1000);
 
-  timerEl.textContent = time;
+  timerElement.textContent = time;
 
-  getQuestion();
+  showQuiz();
 }
 
-function getQuestion() {
+// show questions and choices
+function showQuiz() {
   var currentQuestion = questions[currentQuestionIndex];
 
-  var titleEl = document.querySelector("#question-title");
-  titleEl.textContent = currentQuestion.title;
+  var titleElement = document.querySelector("#question-title");
+  titleElement.textContent = currentQuestion.title;
 
-  choicesEl.innerHTML = "";
+  choicesElement.innerHTML = "";
 
   currentQuestion.choices.forEach(function (choice, i) {
     var choiceNode = document.createElement("button");
@@ -40,7 +77,7 @@ function getQuestion() {
 
     choiceNode.onclick = questionClick;
 
-    choicesEl.appendChild(choiceNode);
+    choicesElement.appendChild(choiceNode);
   });
 }
 
@@ -54,16 +91,17 @@ function questionClick() {
     }
 
     // display new time
-    timerEl.textContent = time;
+    timerElement.textContent = time;
 
-    feedbackEl.textContent = "WRONG!";
+    // after question is answered, show if correct or wrong
+    feedbackElement.textContent = "WRONG!";
   } else {
-    feedbackEl.textContent = "CORRECT!";
+    feedbackElement.textContent = "CORRECT!";
   }
 
-  feedbackEl.setAttribute("class", "feedback");
+  feedbackElement.setAttribute("class", "feedback");
   setTimeout(function () {
-    feedbackEl.setAttribute("class", "feedback hide");
+    feedbackElement.setAttribute("class", "feedback hide");
   }, 1000);
 
   // next question
@@ -72,7 +110,7 @@ function questionClick() {
   if (currentQuestionIndex === questions.length) {
     quizEnd();
   } else {
-    getQuestion();
+    showQuiz();
   }
 }
 
@@ -81,21 +119,21 @@ function quizEnd() {
   clearInterval(timerId);
 
   // show end screen
-  var endScreenEl = document.querySelector("#end-screen");
-  endScreenEl.removeAttribute("class");
+  var endScreenElement = document.querySelector("#end-screen");
+  endScreenElement.removeAttribute("class");
 
   // show final score
-  var finalScoreEl = document.querySelector("#final-score");
-  finalScoreEl.textContent = time;
+  var finalScoreElement = document.querySelector("#final-score");
+  finalScoreElement.textContent = time;
 
   // hide questions section
-  questionsEl.setAttribute("class", "hide");
+  questionsElement.setAttribute("class", "hide");
 }
 
-function clockTick() {
+function clockTicking() {
   // update time
   time--;
-  timerEl.textContent = time;
+  timerElement.textContent = time;
 
   // end quiz when time is over
   if (time <= 0) {
@@ -104,8 +142,9 @@ function clockTick() {
 }
 
 function saveHighscore() {
-  var initials = initialsEl.value.trim();
+  var initials = initialsElement.value.trim();
 
+  // if initials not blank save to local storage
   if (initials !== "") {
     var highscores =
       JSON.parse(window.localStorage.getItem("highscores")) || [];
@@ -124,16 +163,8 @@ function saveHighscore() {
   }
 }
 
-function checkForEnter(event) {
-  if (event.key === "Enter") {
-    saveHighscore();
-  }
-}
-
 // button to submit initials
-submitBtn.onclick = saveHighscore;
+submitButton.onclick = saveHighscore;
 
 // button to start quiz
-startBtn.onclick = startQuiz;
-
-initialsEl.onkeyup = checkForEnter;
+startButton.onclick = startQuiz;
